@@ -4,7 +4,7 @@
     [clojure.java.io :refer [as-file output-stream writer]]
     [clojure.string :as string]
     [cheshire.core :refer [generate-stream]]
-    [owlapi-clj.core :ref [load-ontology]]
+    [owlapi-clj.core :refer [load-ontology classes]]
     )
   (:gen-class))
 
@@ -57,12 +57,11 @@
 (defn owl2jsonld 
   [urls {:keys [all-imports no-imports classes properties prefix inherit embed]}]
 
-  (log "Classes is" classes)
-    
-  ;(let [ontologies (map load-ontology urls)]
-    
-  ;  { "@context" {} }))
-  )
+  (let [ontologies (map load-ontology urls)]
+    (log "Ontology" (first ontologies))
+    (log "Classes" (.getClassesInSignature (first (first ontologies))))
+    (log "Properties" (.getObjectPropertiesInSignature (first (first ontologies))))
+    { "@context" {} }))
 
 
 (defn embed-defaults [options]
