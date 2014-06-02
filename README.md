@@ -41,9 +41,10 @@ and build it:
 
 Generate JSON-LD context from the given RDFS/OWL ontology URL(s):
 
-    $ java -jar owl2jsonld-*-standalone.jar [-a|-n] [-c|-p] [-P PREFIX] [-i] [-o OUTPUT] [-e] ONTOLOGY ...>
+    $ java -jar owl2jsonld-*-standalone.jar [-a|-n] [-c|-p] [-P PREFIX] [-i] [-o OUTPUT] [-e] ONTOLOGY ...
 
-You may alternatively run the tool using `lein run -- [options] ONTOLOGY`
+To avoid the uberjar, you may alternatively run the tool using `lein run --
+[options] ONTOLOGY`
 
 
 ### Options
@@ -52,7 +53,7 @@ You may alternatively run the tool using `lein run -- [options] ONTOLOGY`
 stain@biggie-mint ~/src/owl2jsonld $ lein run -- --help
 Convert OWL ontology to JSON-LD context
 
-Usage: owl2jsonld [options] ontology
+Usage: owl2jsonld [options] ONTOLOGY...
 
 Options:
   -a, --all-imports    Include all OWL-imported concepts (default: only directly referenced elements)

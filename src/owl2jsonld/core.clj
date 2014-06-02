@@ -27,7 +27,7 @@
 (defn usage [options-summary]
   (->> ["Convert OWL ontology to JSON-LD context"
         ""
-        "Usage: owl2jsonld [options] ontology"
+        "Usage: owl2jsonld [options] ONTOLOGY..."
         ""
         "Options:"
         options-summary
