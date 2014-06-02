@@ -44,7 +44,7 @@ Generate JSON-LD context from a given RDFS/OWL ontology URL:
 ### Options
 
 | Opt| Option                      | Description
---------------------------------------------------------------
+|----|-----------------------------|--------------------------
 | -a | --all-imports               | Include all OWL-imported concepts (default: only directly referenced elements)
 | -n | --no-imports                | Exclude all OWL-imported concepts
 | -c | --classes                   | Include only classes
