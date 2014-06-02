@@ -48,17 +48,6 @@ You may alternatively run the tool using `lein run -- [options] ONTOLOGY`
 
 ### Options
 
-| Opt| Option                      | Description
------|-----------------------------|--------------------------
-| -a | --all-imports               | Include all OWL-imported concepts (default: only directly referenced elements)
-| -n | --no-imports                | Exclude all OWL-imported concepts
-| -c | --classes                   | Include only classes
-| -p | --properties                | Include only properties
-| -P `PREFIX`  | --prefix=`PREFIX` | JSON-LD prefix to use for generated concepts (default: no prefix)
-| -i | --inherit                   | Inherit prefixes from the source ontology
-| -o `OUTPUT`  | --output=`OUTPUT` | Output file for generated JSON-LD context (default: write to STDOUT)
-| -e | --embed                     | Embed ontology definition serialized as JSON-LD
-
 ```
 stain@biggie-mint ~/src/owl2jsonld $ lein run -- --help
 Convert OWL ontology to JSON-LD context
@@ -77,8 +66,6 @@ Options:
   -v, --verbose        Verbose output on STDERR
   -h, --help
 
-
-More info: README.md or https://github.com/stain/owl2jsonld
 ```
 
 ## Examples
