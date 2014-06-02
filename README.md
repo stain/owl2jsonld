@@ -15,10 +15,22 @@ have the capabilities described here.
 
 ## Installation
 
-You'll need [git](http://www.git-scm.com/) and [leiningen](http://leiningen.org/).
+Install dependencies:
+ * [git](http://www.git-scm.com/)
+ * [leiningen](http://leiningen.org/)
+ * [owlapi-clj](https://github.com/stain/owlapi-clj) (see below)
 
-    $ git clone https://github.com/stain/owl2jsonld.git     
+    $ git clone https://github.com/stain/owlapi-clj.git
+    $ cd owlapi-clj ; lein install ; cd ..
+
+TODO: Ensure owlapi-clj is in Clojars to avoid manuall install.
+
+The check out [owl2jsonld](https://github.com/stain/owl2jsonld) and build it:
+
+    $ git clone https://github.com/stain/owl2jsonld.git
+    $ cd owl2jsonld
     $ lein uberjar
+
 
 ## Usage
 
