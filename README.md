@@ -1,10 +1,10 @@
 # owl2jsonld
 
-Convert RDFS/OWL ontology to JSON-LD context.
+Convert OWL ontology to JSON-LD context.
 
 This tool intends to generate a [JSON-LD](http://www.w3.org/TR/json-ld/) `@context`
 for concepts (classes and properties) found in the specified 
-[OWL](http://www.w3.org/TR/owl2-primer/) ontology.
+[OWL](http://www.w3.org/TR/owl2-primer/) or RDFS ontology.
 
 
 # Status: EARLY DEVELOPMENT
