@@ -27,7 +27,7 @@ To build the dependency owlapi-clj:
     $ lein install 
     $ cd ..
 
-TODO: Ensure owlapi-clj is in Clojars to avoid manuall install.
+_TODO: Ensure owlapi-clj is in Clojars to avoid manuall install._
 
 Then check out [owl2jsonld](https://github.com/stain/owl2jsonld) (this project)
 and build it:
