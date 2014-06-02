@@ -57,7 +57,19 @@
 (defn owl2jsonld 
   [urls {:keys [all-imports no-imports classes properties prefix inherit embed]}]
 
-  { "@context" {} })
+  (log "Classes is" classes)
+    
+  ;(let [ontologies (map load-ontology urls)]
+    
+  ;  { "@context" {} }))
+  )
+
+
+(defn embed-defaults [options]
+    (if (or (:classes options) (:properties options))
+        options
+        ; Default if none mentioned, both on
+        (merge { :classes true :properties true } options)))
 
 
 (defn main
@@ -66,7 +78,7 @@
          :as options
          }] 
   (with-open [out (writer output)]
-      (generate-stream (owl2jsonld urls options) 
+      (generate-stream (owl2jsonld urls (embed-defaults options))
                          out {:pretty true})))
 
 (defn -main [& args]
