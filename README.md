@@ -37,9 +37,9 @@ and build it:
 
 ## Usage
 
-Generate JSON-LD context from a given RDFS/OWL ontology URL:
+Generate JSON-LD context from the given RDFS/OWL ontology URL(s):
 
-    $ java -jar owl2jsonld-*-standalone.jar [-a|-n] [-c|-p] [-P PREFIX] [-i] [-o OUTPUT] <ONTOLOGY ...>
+    $ java -jar owl2jsonld-*-standalone.jar [-a|-n] [-c|-p] [-P PREFIX] [-i] [-o OUTPUT] [-e] <ONTOLOGY ...>
 
 ### Options
 
@@ -49,9 +49,9 @@ Generate JSON-LD context from a given RDFS/OWL ontology URL:
 | -n | --no-imports                | Exclude all OWL-imported concepts
 | -c | --classes                   | Include only classes
 | -p | --properties                | Include only properties
-| -P `PREFIX` | --prefix=`PREFIX`  | JSON-LD prefix to use for generated concepts (default: no prefix)
+| -P `PREFIX`  | --prefix=`PREFIX` | JSON-LD prefix to use for generated concepts (default: no prefix)
 | -i | --inherit                   | Inherit prefixes from the source ontology
-| -o `OUTPUT` | --output=`OUTPUT`  | Output file for generated JSON-LD context (default: write to STDOUT)
+| -o `OUTPUT`  | --output=`OUTPUT` | Output file for generated JSON-LD context (default: write to STDOUT)
 | -e | --embed                     | Embed ontology definition serialized as JSON-LD
 
 ## Examples
