@@ -20,6 +20,8 @@ Install dependencies:
  * [leiningen](http://leiningen.org/)
  * [owlapi-clj](https://github.com/stain/owlapi-clj) (see below)
 
+To build the dependency owlapi-clj:
+
     $ git clone https://github.com/stain/owlapi-clj.git
     $ cd owlapi-clj 
     $ lein install 
