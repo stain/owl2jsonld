@@ -4,6 +4,7 @@
     [clojure.java.io :refer [as-file output-stream writer]]
     [clojure.string :as string]
     [cheshire.core :refer [generate-stream]]
+    [owlapi-clj.core :ref [load-ontology]]
     )
   (:gen-class))
 
@@ -53,12 +54,20 @@
   (if *log*
     (binding [*out* *log*] (apply println msg))))
 
-(defn owl2jsonld
-  [urls {:keys 
-          [all-imports no-imports classes properties prefix inherit output embed]
-         :or { output System/out }}] 
+(defn owl2jsonld 
+  [urls {:keys [all-imports no-imports classes properties prefix inherit embed]}]
+
+  { "@context" {} })
+
+
+(defn main
+  [urls {:keys [output]
+         :or { output System/out }
+         :as options
+         }] 
   (with-open [out (writer output)]
-      (generate-stream {"@context" {} } out {:pretty true})))
+      (generate-stream (owl2jsonld urls options) 
+                         out {:pretty true})))
 
 (defn -main [& args]
   (let [{:keys [options arguments errors summary]} (parse-opts args cli-options)]
@@ -72,4 +81,4 @@
       
       )
     (binding [*log* (if (:verbose options) *err* nil)]
-      (owl2jsonld arguments options))))
+      (main arguments options))))
