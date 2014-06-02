@@ -58,7 +58,7 @@
           [all-imports no-imports classes properties prefix inherit output embed]
          :or { output System/out }}] 
   (with-open [out (writer output)]
-      (generate-stream {"@context" {} } out )))
+      (generate-stream {"@context" {} } out {:pretty true})))
 
 (defn -main [& args]
   (let [{:keys [options arguments errors summary]} (parse-opts args cli-options)]
