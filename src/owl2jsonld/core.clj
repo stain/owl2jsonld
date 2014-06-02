@@ -1,8 +1,9 @@
 (ns owl2jsonld.core
   (:require 
     [clojure.tools.cli :refer [parse-opts]]
-    [clojure.java.io :refer [as-file output-stream]]
+    [clojure.java.io :refer [as-file output-stream writer]]
     [clojure.string :as string]
+    [cheshire.core :refer [generate-stream]]
     )
   (:gen-class))
 
@@ -55,13 +56,9 @@
 (defn owl2jsonld
   [urls {:keys 
           [all-imports no-imports classes properties prefix inherit output embed]
-         :or {
-          :output *out*
-         }}] 
-  (log :urls urls)
-  (log :imports all-imports)
-  (log :classes classes)
-  (log :output output))
+         :or { output System/out }}] 
+  (with-open [out (writer output)]
+      (generate-stream {"@context" {} } out )))
 
 (defn -main [& args]
   (let [{:keys [options arguments errors summary]} (parse-opts args cli-options)]
