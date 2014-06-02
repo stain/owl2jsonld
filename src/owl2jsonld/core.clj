@@ -1,7 +1,7 @@
 (ns owl2jsonld.core
   (:require 
     [clojure.tools.cli :refer [parse-opts]]
-    [clojure.java.io :refer [as-file]]
+    [clojure.java.io :refer [as-file output-stream]]
     [clojure.string :as string]
     )
   (:gen-class))
@@ -41,9 +41,27 @@
        (string/join \newline errors)))
 
 (defn exit [status msg]
-  (println msg)
+  (binding [*out* (if (> status 0) *err* *out*)] 
+    (println msg))
   (System/exit status))
 
+
+(def ^:dynamic *log* nil)
+
+(defn log [& msg]
+  (if *log*
+    (binding [*out* *log*] (apply println msg))))
+
+(defn owl2jsonld
+  [urls {:keys 
+          [all-imports no-imports classes properties prefix inherit output embed]
+         :or {
+          :output *out*
+         }}] 
+  (log :urls urls)
+  (log :imports all-imports)
+  (log :classes classes)
+  (log :output output))
 
 (defn -main [& args]
   (let [{:keys [options arguments errors summary]} (parse-opts args cli-options)]
@@ -51,7 +69,10 @@
     (cond
       (:help options) (exit 0 (usage summary))
       (not= (count arguments) 1) (exit 1 (usage summary))
-      errors (exit 1 (error-msg errors)))
-    (print options)
-    (print arguments)
-    ))
+      errors (exit 2 (error-msg errors))
+      (and (:all-imports options) (:no-imports options)) (exit 3 (error-msg 
+            ["Can't combine --all-imports and --no-imports"]))
+      
+      )
+    (binding [*log* (if (:verbose options) *err* nil)]
+      (owl2jsonld arguments options))))
