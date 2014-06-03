@@ -4,4 +4,4 @@ lein: lein2
 before_install: 
   - git clone https://github.com/stain/owlapi-clj.git
   - cd owlapi-clj
-  - mvn install  
+  - lein install  
