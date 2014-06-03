@@ -18,6 +18,7 @@ have the capabilities described here. :-)
 ## Installation
 
 Install dependencies:
+ * [OpenJDK 7](http://openjdk.java.net/) or [Oracle Java 7 SE](http://www.oracle.com/technetwork/java/javase/downloads/index.html?ssSourceSiteId=ocomen)
  * [git](http://www.git-scm.com/)
  * [leiningen](http://leiningen.org/)
  * [owlapi-clj](https://github.com/stain/owlapi-clj) (see below)
@@ -45,8 +46,8 @@ Generate JSON-LD context from the given RDFS/OWL ontology URL(s):
 
     $ java -jar owl2jsonld-*-standalone.jar [-a|-n] [-c|-p] [-P PREFIX] [-i] [-o OUTPUT] [-e] ONTOLOGY ...
 
-To avoid the uberjar, you may alternatively run the tool using `lein run --
-[options] ONTOLOGY`
+To avoid the uberjar, you may alternatively run the tool using 
+`lein run -- [options] ONTOLOGY`
 
 
 ### Options
