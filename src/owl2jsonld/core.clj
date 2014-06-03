@@ -21,8 +21,10 @@
 
     (doseq [ontology ontologies]
       (log "Ontology" ontology)
-      (log "Classes" (owlapi/classes ontology))
-      (log "Properties" (owlapi/object-properties ontology))
+      (if classes
+        (log "Classes" (owlapi/classes ontology)))
+      (if properties
+        (log "Properties" (owlapi/object-properties ontology)))
       )
     { "@context" {} }))
 
