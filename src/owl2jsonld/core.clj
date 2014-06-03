@@ -14,9 +14,13 @@
   [urls {:keys [all-imports no-imports classes properties prefix inherit embed]}]
 
   (let [ontologies (map load-ontology urls)]
-    (log "Ontology" (first ontologies))
-    (log "Classes" (.getClassesInSignature (first (first ontologies))))
-    (log "Properties" (.getObjectPropertiesInSignature (first (first ontologies))))
+    ; Ensure all ontologies are loaded before we make any assumptions about
+    ; classes etc.. e.g. allowing second ontology to modulate terms from the
+    ; first ontology
+    (dorun ontologies)
+    (log "Ontology" ontologies)
+    (log "Classes" (.getClassesInSignature (first ontologies)))
+    (log "Properties" (.getObjectPropertiesInSignature (first ontologies)))
     { "@context" {} }))
 
 
