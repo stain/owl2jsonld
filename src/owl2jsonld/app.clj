@@ -48,6 +48,12 @@
   (System/exit status))
 
 
+(defn embed-defaults [options]
+      (if (or (:classes options) (:properties options))
+                options
+                ; Default if none mentioned, both on
+                (merge { :classes true :properties true } options)))
+
 (defn main
   [urls {:keys [output]
          :or { output System/out }
