@@ -8,6 +8,6 @@
                  [cheshire "5.3.1"]
                  [org.clojure/tools.cli "0.3.1"]
                 ]
-  :main ^:skip-aot owl2jsonld.core
+  :main ^:skip-aot owl2jsonld.app
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
