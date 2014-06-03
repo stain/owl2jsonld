@@ -1,6 +1,6 @@
 (ns owl2jsonld.core
   (:require 
-    [owlapi-clj.core :refer [load-ontology classes]]
+    [owlapi-clj.core :as owlapi]
     )
   (:gen-class))
 
@@ -13,14 +13,17 @@
 (defn owl2jsonld 
   [urls {:keys [all-imports no-imports classes properties prefix inherit embed]}]
 
-  (let [ontologies (map load-ontology urls)]
+  (let [ontologies (map owlapi/load-ontology urls)]
     ; Ensure all ontologies are loaded before we make any assumptions about
     ; classes etc.. e.g. allowing second ontology to modulate terms from the
     ; first ontology
     (dorun ontologies)
-    (log "Ontology" ontologies)
-    (log "Classes" (.getClassesInSignature (first ontologies)))
-    (log "Properties" (.getObjectPropertiesInSignature (first ontologies)))
+
+    (doseq [ontology ontologies]
+      (log "Ontology" ontology)
+      (log "Classes" (owlapi/classes ontology))
+      (log "Properties" (owlapi/object-properties ontology))
+      )
     { "@context" {} }))
 
 
