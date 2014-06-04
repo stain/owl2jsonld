@@ -68,7 +68,7 @@
     ;; Handle help and error conditions
     (cond
       (:help options) (exit 0 (usage summary))
-      (not= (count arguments) 1) (exit 1 (usage summary))
+      (empty? arguments) (exit 1 (usage summary))
       errors (exit 2 (error-msg errors))
       (and (:all-imports options) (:no-imports options)) (exit 3 (error-msg 
             ["Can't combine --all-imports and --no-imports"]))
