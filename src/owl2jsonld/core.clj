@@ -74,8 +74,9 @@
 
 (defn property-to-jsonld [^OWLProperty property]
   { (jsonld-name property)
-    (merge (named-to-jsonld property)         
-           (jsonld-type-for-property property)) } )
+    (merge 
+           (jsonld-type-for-property property)
+           (named-to-jsonld property) ) } )
 
 (defn is-defined? [options ^OWLEntity entity]
   ; Must be RDFS:isDefinedby one of the specified ontologies specified
