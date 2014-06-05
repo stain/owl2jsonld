@@ -59,9 +59,11 @@
          :or { output System/out }
          :as options
          }] 
-  (with-open [out (writer output)]
+  (with-open [out (writer output :encoding "utf-8")]
       (generate-stream (owl2jsonld urls (embed-defaults options))
-                         out {:pretty true})))
+                         out {:pretty true})
+      (.write out "\n") ; Trailing newline
+      ))
 
 (defn -main [& args]
   (let [{:keys [options arguments errors summary]} (parse-opts args cli-options)]
