@@ -1,15 +1,20 @@
 (ns owl2jsonld.core
   (:import 
      (org.semanticweb.owlapi.model IRI 
-                                   OWLNamedObject
-                                   OWLClass OWLProperty
-                                   OWLDataRange
-                                   OWLDatatype
-                                   OWLObjectProperty 
+                                   OWLClass 
                                    OWLClassExpression
+                                   OWLDatatype
+                                   OWLDataRange
+                                   OWLEntity
+                                   OWLNamedObject
+                                   OWLObject
+                                   OWLObjectProperty
+                                   OWLOntology
+                                   OWLProperty
                                    ))
   (:require 
     [owlapi-clj.core :as owlapi]
+    [clojure.set :refer [intersection union]]
     )
   (:gen-class))
 
@@ -68,25 +73,52 @@
     (merge (named-to-jsonld property)         
            (jsonld-type-for-property property)) } )
 
+(defn is-defined? [options ^OWLEntity entity]
+  ; Must be RDFS:isDefinedby one of the specified ontologies specified
+  (not (empty? (intersection
+     (:ontology-iris options)   
+     (set (map #(.getValue %) 
+               (owlapi/annotations entity (:RDFSIsDefinedBy (owlapi/owl-types)))))))))
+
+(defn only-valid [options entities]
+  (if (:only-defined options)
+    (filter (partial is-defined? options) entities)
+    entities))
+
 (defn ontology-to-jsonld [options ontology]
    (binding [*options* (inject-prefixes options ontology)]
      (log "Ontology" ontology)
         (merge
             {}
-            (if (:classes options) (apply merge (map class-to-jsonld (owlapi/classes ontology))))
+            (if (:classes options) (apply merge (map class-to-jsonld 
+                                                     (only-valid options (owlapi/classes ontology)))))
             (if (:properties options)
               (apply merge (concat
-               (map property-to-jsonld (owlapi/object-properties ontology))
+               (map property-to-jsonld (only-valid options (owlapi/object-properties ontology)))
                      ;; TODO: What about annotation properties?
-               (map property-to-jsonld (owlapi/data-properties ontology)))
+               (map property-to-jsonld (only-valid options (owlapi/data-properties ontology))))
              ))
             )))
+
+(defn ontology-iri [^OWLOntology ontology]
+  (let [ontology-id (bean (.getOntologyID ontology))]
+       ; Filter out nil
+       (keep identity 
+             (vals (select-keys ontology-id [:versionIRI :ontologyIRI]))))) 
+
+(defn ontology-iris [ontologies]
+  (set (mapcat ontology-iri ontologies)))
 
 (defn owl2jsonld 
   [urls {:keys [all-imports no-imports inherit embed]
          :as options}]
 	  (let [ontologies (doall (map owlapi/load-ontology urls))
-          all-ontologies (if all-imports (owlapi/loaded-ontologies) ontologies)]
+          all-ontologies (if all-imports (owlapi/loaded-ontologies) ontologies)
+          options (merge options 
+                         { :ontology-iris
+                              (union 
+                                (set (map owlapi/create-iri urls))
+                                (ontology-iris ontologies))})]
      { "@context" 
            (merge (apply merge (map (partial ontology-to-jsonld options) all-ontologies)))
       }))
