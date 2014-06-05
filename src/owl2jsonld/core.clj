@@ -4,6 +4,7 @@
                                    OWLClass 
                                    OWLClassExpression
                                    OWLDatatype
+                                   OWLDataProperty
                                    OWLDataRange
                                    OWLEntity
                                    OWLNamedObject
@@ -54,19 +55,22 @@
   { (jsonld-name class) (named-to-jsonld class) } )
 
 (defn jsonld-type-for-property [^OWLProperty property]
-  (if (instance? OWLObjectProperty property) 
-    {"@type" "@id" }
-    (let [ranges (owlapi/ranges-of-property property)]
-      (cond 
-        (empty? ranges) {}
-        (some #(instance? OWLClassExpression %) ranges) {"@type" "@id" }
-        ; If there is only one range, which is a Datatype, we can 
-        ; include it in JSON-LD's @type. 
-        ;; TODO: Handle restrictions etc. on 
-        ; ultimately uniform datatype
-        (and (empty? (rest ranges)) (instance? OWLDatatype (first ranges))) 
-              {"@type" (str (.getIRI (first ranges))) }
-        :else {}))))
+  (cond 
+    (instance? OWLObjectProperty property) 
+        {"@type" "@id" }
+    (instance? OWLDataProperty property)
+	    (let [ranges (owlapi/ranges-of-property property)]
+	      (cond 
+	        (empty? ranges) {}
+	        (some #(instance? OWLClassExpression %) ranges) {"@type" "@id" }
+	        ; If there is only one range, which is a Datatype, we can 
+	        ; include it in JSON-LD's @type. 
+	        ;; TODO: Handle restrictions etc. on 
+	        ; ultimately uniform datatype
+	        (and (empty? (rest ranges)) (instance? OWLDatatype (first ranges))) 
+	              {"@type" (str (.getIRI (first ranges))) }
+	        :else {}))
+    :else {}))
 
 (defn property-to-jsonld [^OWLProperty property]
   { (jsonld-name property)
@@ -94,8 +98,8 @@
                                                      (only-valid options (owlapi/classes ontology)))))
             (if (:properties options)
               (apply merge (concat
+               (map property-to-jsonld (only-valid options (owlapi/annotation-properties ontology)))
                (map property-to-jsonld (only-valid options (owlapi/object-properties ontology)))
-                     ;; TODO: What about annotation properties?
                (map property-to-jsonld (only-valid options (owlapi/data-properties ontology))))
              ))
             )))
