@@ -13,7 +13,7 @@
 (def cli-options
   [ ; When changing, remember to also update README.md
     ["-a" "--all-imports"    "Include all OWL-imported concepts (default: only directly referenced elements)"]
-    ["-n" "--no-imports"     "Exclude all OWL-imported concepts"]
+;    ["-n" "--no-imports"     "Exclude all OWL-imported concepts"]
     ["-d" "--only-defined"   "Include only concepts which are rdfs:isDefinedBy the specified ontologies"]
     ["-c" "--classes"        "Include only classes"]
     ["-p" "--properties"     "Include only properties"]
@@ -22,7 +22,7 @@
     ["-o" "--output OUTPUT"  "Output file for generated JSON-LD context (default: write to STDOUT)"
       :parse-fn as-file 
     ]
-    ["-e" "--embed"          "Embed ontology definition serialized as JSON-LD"]
+;    ["-e" "--embed"          "Embed ontology definition serialized as JSON-LD"]
     ["-v" "--verbose"        "Verbose output on STDERR"] 
     ["-h" "--help"]
 ])
