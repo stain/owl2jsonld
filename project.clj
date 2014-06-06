@@ -1,4 +1,4 @@
-(defproject owl2jsonld "0.1.0-SNAPSHOT"
+(defproject owl2jsonld "0.1.0"
   :description "Convert RDFS/OWL ontology to JSON-LD context"
   :url "https://github.com/stain/owl2jsonld"
   :license {:name "Eclipse Public License"
