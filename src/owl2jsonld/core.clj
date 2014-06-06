@@ -14,7 +14,7 @@
                                    OWLProperty
                                    ))
   (:require 
-    [owlapi-clj.core :as owlapi]
+    [owlapi.core :as owlapi]
     [clojure.set :refer [intersection union]]
     )
   (:gen-class))
