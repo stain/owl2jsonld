@@ -44,7 +44,6 @@ To avoid the uberjar, you may alternatively run the tool using
 ### Options
 
 ```
-stain@biggie-mint ~/src/owl2jsonld $ lein run -- --help
 Convert OWL ontology to JSON-LD context
 
 Usage: owl2jsonld [options] ONTOLOGY...
@@ -52,6 +51,7 @@ Usage: owl2jsonld [options] ONTOLOGY...
 Options:
   -a, --all-imports    Include all OWL-imported concepts (default: only directly referenced elements)
   -n, --no-imports     Exclude all OWL-imported concepts
+  -d, --only-defined   Include only concepts which are rdfs:isDefinedBy the specified ontologies
   -c, --classes        Include only classes
   -p, --properties     Include only properties
   -P, --prefix PREFIX  JSON-LD prefix to use for generated concepts (default: no prefix)
@@ -60,6 +60,9 @@ Options:
   -e, --embed          Embed ontology definition serialized as JSON-LD
   -v, --verbose        Verbose output on STDERR
   -h, --help
+
+
+More info: README.md or https://github.com/stain/owl2jsonld
 
 ```
 
