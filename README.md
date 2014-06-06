@@ -1,7 +1,7 @@
 # owl2jsonld
 
 [![Build Status](https://travis-ci.org/stain/owl2jsonld.svg)](https://travis-ci.org/stain/owl2jsonld)
-[![doi:10.5281/zenodo.10330](https://zenodo.org/badge/doi/10.5281/zenodo.10330.png)](http://dx.doi.org/10.5281/zenodo.10330)
+[![doi:10.5281/zenodo.10331](https://zenodo.org/badge/doi/10.5281/zenodo.10331.png)](http://dx.doi.org/10.5281/zenodo.10331)
 
 *Convert OWL ontology to JSON-LD context*
 
