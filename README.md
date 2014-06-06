@@ -21,18 +21,9 @@ Install dependencies:
  * [OpenJDK 7](http://openjdk.java.net/) or [Oracle Java 7 SE](http://www.oracle.com/technetwork/java/javase/downloads/index.html?ssSourceSiteId=ocomen)
  * [git](http://www.git-scm.com/)
  * [leiningen](http://leiningen.org/)
- * [owlapi-clj](https://github.com/stain/owlapi-clj) (see below)
 
-To build the dependency owlapi-clj:
 
-    $ git clone https://github.com/stain/owlapi-clj.git
-    $ cd owlapi-clj 
-    $ lein install 
-    $ cd ..
-
-_TODO: Ensure owlapi-clj is in Clojars to avoid manuall install._
-
-Then check out [owl2jsonld](https://github.com/stain/owl2jsonld) (this project)
+Check out [owl2jsonld](https://github.com/stain/owl2jsonld) (this project)
 and build it:
 
     $ git clone https://github.com/stain/owl2jsonld.git
