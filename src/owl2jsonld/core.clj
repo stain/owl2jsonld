@@ -98,12 +98,11 @@
             (if (:classes options) (apply merge (map class-to-jsonld 
                                                      (only-valid options (owlapi/classes ontology)))))
             (if (:properties options)
-              (apply merge (concat
-               (map property-to-jsonld (only-valid options (owlapi/annotation-properties ontology)))
-               (map property-to-jsonld (only-valid options (owlapi/object-properties ontology)))
-               (map property-to-jsonld (only-valid options (owlapi/data-properties ontology))))
-             ))
-            )))
+              (merge (map property-to-jsonld (only-valid options 
+              (concat
+               (owlapi/annotation-properties ontology)
+                (owlapi/object-properties ontology)
+               (owlapi/data-properties ontology)))))))))
 
 (defn ontology-iri [^OWLOntology ontology]
   (let [ontology-id (bean (.getOntologyID ontology))]
@@ -117,6 +116,7 @@
 (defn owl2jsonld 
   [urls {:keys [all-imports no-imports inherit embed]
          :as options}]
+          (owlapi/with-owl
 	  (let [ontologies (doall (map owlapi/load-ontology urls))
           all-ontologies (if all-imports (owlapi/loaded-ontologies) ontologies)
           options (merge options 
@@ -126,5 +126,5 @@
                                 (ontology-iris ontologies))})]
      { "@context" 
            (merge (apply merge (map (partial ontology-to-jsonld options) all-ontologies)))
-      }))
+      })))
 
