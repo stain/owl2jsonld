@@ -109,3 +109,11 @@ either version 1.0 or (at your option) any later version.
 The uberjar contains [OWL API](http://owlapi.sourceforge.net/), which is
 distributed under the alternative of [LGPL](http://www.gnu.org/licenses/lgpl)
 or [Apache license 2.0](http://www.apache.org/licenses).
+
+# Cite
+
+Cite as:
+
+Soiland-Reyes, Stian (2014). owl2jsonld 0.1.0. ZENODO. [10.5281/zenodo.10331](http://dx.doi.org/10.5281/zenodo.10331)
+
+
