@@ -114,6 +114,6 @@ or [Apache license 2.0](http://www.apache.org/licenses).
 
 Cite as:
 
-Soiland-Reyes, Stian (2014). owl2jsonld 0.1.0. ZENODO. [10.5281/zenodo.10331](http://dx.doi.org/10.5281/zenodo.10331)
+> Soiland-Reyes, Stian (2014). owl2jsonld 0.1.0. ZENODO. [10.5281/zenodo.10331](http://dx.doi.org/10.5281/zenodo.10331)
 
 
