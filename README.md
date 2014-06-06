@@ -1,21 +1,27 @@
 # owl2jsonld
 
 [![Build Status](https://travis-ci.org/stain/owl2jsonld.svg)](https://travis-ci.org/stain/owl2jsonld)
+[![doi:10.5281/zenodo.10330](https://zenodo.org/badge/doi/10.5281/zenodo.10330.png)](http://dx.doi.org/10.5281/zenodo.10330)
 
-Convert OWL ontology to JSON-LD context.
+*Convert OWL ontology to JSON-LD context*
 
-This tool intends to generate a [JSON-LD](http://www.w3.org/TR/json-ld/) `@context`
+This tool generate a [JSON-LD](http://www.w3.org/TR/json-ld/) `@context`
 for concepts (classes and properties) found in the specified 
 [OWL](http://www.w3.org/TR/owl2-primer/) or RDFS ontology.
 
 
-# Status: EARLY DEVELOPMENT
+## Download
 
-This project is still at an early development status and do not yet
-have the capabilities described here. :-)
+The [official releases](https://github.com/stain/owl2jsonld/releases)
+contain an *uberjar* (standalone) JAR, which bundles all dependencies
+and can be used as a commandline tool.
+
+The uberjar contains [OWL API](http://owlapi.sourceforge.net/), which is
+distributed under the alternative of [LGPL](http://www.gnu.org/licenses/lgpl)
+or [Apache license 2.0](http://www.apache.org/licenses).
 
 
-## Installation
+## Installing from source
 
 Install dependencies:
  * [OpenJDK 7](http://openjdk.java.net/) or [Oracle Java 7 SE](http://www.oracle.com/technetwork/java/javase/downloads/index.html?ssSourceSiteId=ocomen)
@@ -31,14 +37,16 @@ and build it:
     $ lein uberjar
 
 
-## Usage
+## Command line usage
 
 Generate JSON-LD context from the given RDFS/OWL ontology URL(s):
 
     $ java -jar owl2jsonld-*-standalone.jar [-a|-n] [-c|-p] [-P PREFIX] [-i] [-o OUTPUT] [-e] ONTOLOGY ...
 
-To avoid the uberjar, you may alternatively run the tool using 
-`lein run -- [options] ONTOLOGY`
+To avoid making a uberjar (e.g. during development), you may alternatively run
+the tool using:
+
+    $ lein run -- [options] ONTOLOGY`
 
 
 ### Options
@@ -63,7 +71,8 @@ Options:
 More info: README.md or https://github.com/stain/owl2jsonld
 ```
 
-## Examples
+
+### Example
 
     $ java -jar owl2jsonld-0.1.0-standalone.jar http://purl.org/pav/
 
@@ -80,9 +89,18 @@ More info: README.md or https://github.com/stain/owl2jsonld
 }
 ```
 
+## Usage from Clojure 
+
+To use from [Clojure](http://clojure.org/) with 
+[Leiningen](http://leiningen.org/), 
+use the [Clojar dependency owl2jsonld](https://clojars.org/owl2jsonld):
+
+    [owl2jsonld "0.1.0"]
+
+
 ## License
 
-Copyright © 2014 [Stian Soiland-Reyes](http://orcid.org/0000-0001-9842-9718).
+Copyright © 2014 [Stian Soiland-Reyes](http://orcid.org/0000-0001-9842-9718), [University of Manchester](http://www.cs.manchester.ac.uk/).
 
 This source code is distributed under the 
 [Eclipse Public License](http://www.eclipse.org/legal/epl-v10.html) 
