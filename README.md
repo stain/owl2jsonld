@@ -1,7 +1,7 @@
 # owl2jsonld
 
 [![Build Status](https://travis-ci.org/stain/owl2jsonld.svg)](https://travis-ci.org/stain/owl2jsonld)
-[![doi:10.5281/zenodo.10563](https://zenodo.org/badge/doi/10.5281/zenodo.10563.png)](http://dx.doi.org/10.5281/zenodo.10563)
+[![doi:10.5281/zenodo.10565](https://zenodo.org/badge/doi/10.5281/zenodo.10565.png)](http://dx.doi.org/10.5281/zenodo.10565)
 
 *Convert OWL ontology to JSON-LD context*
 
@@ -115,6 +115,6 @@ or [Apache license 2.0](http://www.apache.org/licenses).
 Cite as:
 
 <<<<<<< HEAD
-Soiland-Reyes, Stian (2014). owl2jsonld 0.2.0. ZENODO. [10.5281/zenodo.10563](http://dx.doi.org/10.5281/zenodo.10563)
+Soiland-Reyes, Stian (2014). owl2jsonld 0.2.1. ZENODO. [10.5281/zenodo.10565](http://dx.doi.org/10.5281/zenodo.10565)
 
 (Check https://github.com/stain/owl2jsonld#cite for latest version/citation)
