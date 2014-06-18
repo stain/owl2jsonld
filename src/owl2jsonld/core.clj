@@ -98,11 +98,25 @@
             (if (:classes options) (apply merge (map class-to-jsonld 
                                                      (only-valid options (owlapi/classes ontology)))))
             (if (:properties options)
-              (merge (map property-to-jsonld (only-valid options 
-              (concat
-               (owlapi/annotation-properties ontology)
-                (owlapi/object-properties ontology)
-               (owlapi/data-properties ontology)))))))))
+             (if (:properties options)
+               ;; Old
+              (apply merge (concat
+               (map property-to-jsonld (only-valid options (owlapi/annotation-properties ontology)))
+               (map property-to-jsonld (only-valid options (owlapi/object-properties ontology)))
+               (map property-to-jsonld (only-valid options (owlapi/data-properties ontology))))
+             ))))))
+
+          ;; new
+;;    FIXME: Why does this cause 
+;; java.lang.ClassCastException: clojure.lang.PersistentArrayMap cannot be cast to java.util.Map$Entry
+;;    ?
+;              (merge (map property-to-jsonld (only-valid options 
+;              (concat
+;               (owlapi/annotation-properties ontology)
+;               (owlapi/object-properties ontology)
+;               (owlapi/data-properties ontology)
+;                ))))))))
+
 
 (defn ontology-iri [^OWLOntology ontology]
   (let [ontology-id (bean (.getOntologyID ontology))]
