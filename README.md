@@ -74,7 +74,7 @@ More info: README.md or https://github.com/stain/owl2jsonld
 
 ### Example
 
-    $ java -jar owl2jsonld-0.2.0-standalone.jar http://purl.org/pav/
+    $ java -jar owl2jsonld-0.2.1-standalone.jar http://purl.org/pav/
 
 ```json    
 { "@context": {
@@ -95,7 +95,7 @@ To use from [Clojure](http://clojure.org/) with
 [Leiningen](http://leiningen.org/), 
 use the [Clojar dependency owl2jsonld](https://clojars.org/owl2jsonld):
 
-    [owl2jsonld "0.2.0"]
+    [owl2jsonld "0.2.1"]
 
 
 ## License
