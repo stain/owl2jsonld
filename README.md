@@ -1,7 +1,7 @@
 # owl2jsonld
 
 [![Build Status](https://travis-ci.org/stain/owl2jsonld.svg)](https://travis-ci.org/stain/owl2jsonld)
-[![doi:10.5281/zenodo.10331](https://zenodo.org/badge/doi/10.5281/zenodo.10331.png)](http://dx.doi.org/10.5281/zenodo.10331)
+[![doi:10.5281/zenodo.10563](https://zenodo.org/badge/doi/10.5281/zenodo.10563.png)](http://dx.doi.org/10.5281/zenodo.10563)
 
 *Convert OWL ontology to JSON-LD context*
 
@@ -74,7 +74,7 @@ More info: README.md or https://github.com/stain/owl2jsonld
 
 ### Example
 
-    $ java -jar owl2jsonld-0.1.0-standalone.jar http://purl.org/pav/
+    $ java -jar owl2jsonld-0.2.0-standalone.jar http://purl.org/pav/
 
 ```json    
 { "@context": {
@@ -95,7 +95,7 @@ To use from [Clojure](http://clojure.org/) with
 [Leiningen](http://leiningen.org/), 
 use the [Clojar dependency owl2jsonld](https://clojars.org/owl2jsonld):
 
-    [owl2jsonld "0.1.0"]
+    [owl2jsonld "0.2.0"]
 
 
 ## License
@@ -114,6 +114,6 @@ or [Apache license 2.0](http://www.apache.org/licenses).
 
 Cite as:
 
-Soiland-Reyes, Stian (2014). owl2jsonld 0.1.0. ZENODO. [10.5281/zenodo.10331](http://dx.doi.org/10.5281/zenodo.10331)
+Soiland-Reyes, Stian (2014). owl2jsonld 0.1.0. ZENODO. [10.5281/zenodo.10563](http://dx.doi.org/10.5281/zenodo.10563)
 
-
+(Check https://github.com/stain/owl2jsonld#cite for latest version/citation)
