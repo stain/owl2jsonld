@@ -114,7 +114,6 @@ or [Apache license 2.0](http://www.apache.org/licenses).
 
 Cite as:
 
-<<<<<<< HEAD
 Soiland-Reyes, Stian (2014). owl2jsonld 0.2.1. ZENODO. [10.5281/zenodo.10565](http://dx.doi.org/10.5281/zenodo.10565)
 
 (Check https://github.com/stain/owl2jsonld#cite for latest version/citation)
