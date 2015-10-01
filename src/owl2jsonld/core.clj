@@ -102,7 +102,7 @@
             {}
             (if (:classes options) (apply merge (map class-to-jsonld
                                                      (only-valid options (owlapi/classes ontology)))))
-            (if (:individuals options) (apply merge (map individual-to-jsonld (owlapi/individuals))))
+            (if (:individuals options) (apply merge (map individual-to-jsonld (owlapi/individuals ontology))))
             (if (:properties options)
              (if (:properties options)
                ;; Old
