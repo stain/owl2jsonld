@@ -12,6 +12,7 @@
                                    OWLObjectProperty
                                    OWLOntology
                                    OWLProperty
+                                   OWLNamedIndividual
                                    ))
   (:require
     [owlapi.core :as owlapi]
@@ -42,6 +43,7 @@
 ;  (if (:prefix *options*) (str (:prefix *options*) ":") "")
 ;  )
 
+; TODO: use label if present
 (defn name-for-iri [^IRI iri]
   (str (prefix-for iri) (.getFragment iri)))
 
@@ -53,6 +55,9 @@
 
 (defn class-to-jsonld [^OWLClass class]
   { (jsonld-name class) (named-to-jsonld class) } )
+
+(defn individual-to-jsonld [^OWLNamedIndividual individual]
+  { (jsonld-name individual) (named-to-jsonld individual) } )
 
 (defn jsonld-type-for-property [^OWLProperty property]
   (cond
@@ -97,6 +102,7 @@
             {}
             (if (:classes options) (apply merge (map class-to-jsonld
                                                      (only-valid options (owlapi/classes ontology)))))
+            (if (:individuals options) (apply merge (map individual-to-jsonld (owlapi/individuals))))
             (if (:properties options)
              (if (:properties options)
                ;; Old

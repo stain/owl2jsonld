@@ -1,6 +1,6 @@
 (ns owl2jsonld.app
   (:use owl2jsonld.core)
-  (:require 
+  (:require
     [clojure.tools.cli :refer [parse-opts]]
     [clojure.java.io :refer [as-file output-stream writer]]
     [clojure.string :as string]
@@ -16,14 +16,15 @@
 ;    ["-n" "--no-imports"     "Exclude all OWL-imported concepts"]
     ["-d" "--only-defined"   "Include only concepts which are rdfs:isDefinedBy the specified ontologies"]
     ["-c" "--classes"        "Include only classes"]
+    ["-n" "--individuals"        "Include only named individuals"]
     ["-p" "--properties"     "Include only properties"]
     ["-P" "--prefix PREFIX"  "JSON-LD prefix to use for generated concepts (default: no prefix)"]
     ["-i" "--inherit"        "Inherit prefixes from the source ontology"]
     ["-o" "--output OUTPUT"  "Output file for generated JSON-LD context (default: write to STDOUT)"
-      :parse-fn as-file 
+      :parse-fn as-file
     ]
 ;    ["-e" "--embed"          "Embed ontology definition serialized as JSON-LD"]
-    ["-v" "--verbose"        "Verbose output on STDERR"] 
+    ["-v" "--verbose"        "Verbose output on STDERR"]
     ["-h" "--help"]
 ])
 
@@ -44,22 +45,22 @@
        (string/join \newline errors)))
 
 (defn exit [status msg]
-  (binding [*out* (if (> status 0) *err* *out*)] 
+  (binding [*out* (if (> status 0) *err* *out*)]
     (println msg))
   (System/exit status))
 
 
 (defn embed-defaults [options]
-      (if (or (:classes options) (:properties options))
+      (if (or (:classes options) (:properties options) (:individuals options))
                 options
                 ; Default if none mentioned, both on
-                (merge { :classes true :properties true } options)))
+                (merge { :classes true :properties true :individuals true } options)))
 
 (defn main
   [urls {:keys [output]
          :or { output System/out }
          :as options
-         }] 
+         }]
   (with-open [out (writer output :encoding "utf-8")]
       (generate-stream (owl2jsonld urls (embed-defaults options))
                          out {:pretty true})
@@ -73,9 +74,9 @@
       (:help options) (exit 0 (usage summary))
       (empty? arguments) (exit 1 (usage summary))
       errors (exit 2 (error-msg errors))
-      (and (:all-imports options) (:no-imports options)) (exit 3 (error-msg 
+      (and (:all-imports options) (:no-imports options)) (exit 3 (error-msg
             ["Can't combine --all-imports and --no-imports"]))
-      
+
       )
     (binding [*log* (if (:verbose options) *err* nil)]
       (main arguments options))))
