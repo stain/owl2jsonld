@@ -16,9 +16,10 @@
 ;    ["-n" "--no-imports"     "Exclude all OWL-imported concepts"]
     ["-d" "--only-defined"   "Include only concepts which are rdfs:isDefinedBy the specified ontologies"]
     ["-c" "--classes"        "Include only classes"]
-    ["-n" "--individuals"        "Include only named individuals"]
+    ["-I" "--individuals"    "Include only (named) individuals"]
     ["-p" "--properties"     "Include only properties"]
     ["-P" "--prefix PREFIX"  "JSON-LD prefix to use for generated concepts (default: no prefix)"]
+    ["-l" "--label LABEL"    "Annotation property to use as JSON-LD name for concepts (default: none)"]
     ["-i" "--inherit"        "Inherit prefixes from the source ontology"]
     ["-o" "--output OUTPUT"  "Output file for generated JSON-LD context (default: write to STDOUT)"
       :parse-fn as-file

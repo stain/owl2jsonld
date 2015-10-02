@@ -13,6 +13,7 @@
                                    OWLOntology
                                    OWLProperty
                                    OWLNamedIndividual
+                                   OWLAnnotationProperty
                                    ))
   (:require
     [owlapi.core :as owlapi]
@@ -43,21 +44,33 @@
 ;  (if (:prefix *options*) (str (:prefix *options*) ":") "")
 ;  )
 
-; TODO: use label if present
 (defn name-for-iri [^IRI iri]
   (str (prefix-for iri) (.getFragment iri)))
 
-(defn jsonld-name [^OWLNamedObject named]
-  (name-for-iri (.getIRI named)))
+; note: there should exist a more elegant way...
+(defn annotations-for-object [^OWLOntology ontology ^OWLNamedObject object]
+  (map #(. % (getAnnotation)) (.getAnnotationAssertionAxioms ontology (.getIRI object))))
+
+(defn label-for-object [^OWLNamedObject object ^OWLOntology ontology label]
+  (first ; TODO: add lang support
+    (filter
+      #(= (.. % (getProperty) (getIRI) (toString)) label)
+      (annotations-for-object ontology object))))
+
+; TODO: check option
+(defn jsonld-name [^OWLNamedObject named ^OWLOntology ontology label]
+  (or
+    (label-for-object named ontology label)
+    (name-for-iri (.getIRI named))))
 
 (defn named-to-jsonld [^OWLNamedObject named]
   { "@id" (str (.getIRI named)) })
 
-(defn class-to-jsonld [^OWLClass class]
-  { (jsonld-name class) (named-to-jsonld class) } )
+(defn class-to-jsonld [^OWLOntology ontology label ^OWLClass class]
+  { (jsonld-name class ontology label) (named-to-jsonld class) } )
 
-(defn individual-to-jsonld [^OWLNamedIndividual individual]
-  { (jsonld-name individual) (named-to-jsonld individual) } )
+(defn individual-to-jsonld [^OWLOntology ontology label ^OWLNamedIndividual individual]
+  { (jsonld-name individual ontology label) (named-to-jsonld individual) } )
 
 (defn jsonld-type-for-property [^OWLProperty property]
   (cond
@@ -77,8 +90,8 @@
 	        :else {}))
     :else {}))
 
-(defn property-to-jsonld [^OWLProperty property]
-  { (jsonld-name property)
+(defn property-to-jsonld [^OWLOntology ontology label ^OWLProperty property]
+  { (jsonld-name property ontology label)
     (merge
            (jsonld-type-for-property property)
            (named-to-jsonld property) ) } )
@@ -98,19 +111,21 @@
 (defn ontology-to-jsonld [options ontology]
    (binding [*options* (inject-prefixes options ontology)]
      (log "Ontology" ontology)
-        (merge
-            {}
-            (if (:classes options) (apply merge (map class-to-jsonld
-                                                     (only-valid options (owlapi/classes ontology)))))
-            (if (:individuals options) (apply merge (map individual-to-jsonld (owlapi/individuals ontology))))
-            (if (:properties options)
-             (if (:properties options)
-               ;; Old
-              (apply merge (concat
-               (map property-to-jsonld (only-valid options (owlapi/annotation-properties ontology)))
-               (map property-to-jsonld (only-valid options (owlapi/object-properties ontology)))
-               (map property-to-jsonld (only-valid options (owlapi/data-properties ontology))))
-             ))))))
+     (let [label (:label options)]
+       (merge
+         {}
+         (if (:classes options) (apply merge (map (partial class-to-jsonld ontology label)
+                                                  (only-valid options (owlapi/classes ontology)))))
+         (if (:individuals options) (apply merge (map (partial individual-to-jsonld ontology label) (owlapi/individuals ontology))))
+         (if (:properties options)
+          (if (:properties options)
+            ;; Old
+           (apply merge (concat
+            (map (partial property-to-jsonld ontology label) (only-valid options (owlapi/annotation-properties ontology)))
+            (map (partial property-to-jsonld ontology label) (only-valid options (owlapi/object-properties ontology)))
+            (map (partial property-to-jsonld ontology label) (only-valid options (owlapi/data-properties ontology))))
+          )))))))
+
 
           ;; new
 ;;    FIXME: Why does this cause
