@@ -14,6 +14,7 @@
                                    OWLProperty
                                    OWLNamedIndividual
                                    OWLAnnotationProperty
+                                   OWLAnnotation
                                    ))
   (:require
     [owlapi.core :as owlapi]
@@ -47,30 +48,31 @@
 (defn name-for-iri [^IRI iri]
   (str (prefix-for iri) (.getFragment iri)))
 
-; note: there should exist a more elegant way...
-(defn annotations-for-object [^OWLOntology ontology ^OWLNamedObject object]
-  (map #(. % (getAnnotation)) (.getAnnotationAssertionAxioms ontology (.getIRI object))))
+(defn annotation-property [^IRI iri]
+  (.getOWLAnnotationProperty (owlapi/data-factory) iri))
 
-(defn label-for-object [^OWLNamedObject object ^OWLOntology ontology label]
-  (first ; TODO: add lang support
-    (filter
-      #(= (.. % (getProperty) (getIRI) (toString)) label)
-      (annotations-for-object ontology object))))
+(defn select [labels]
+  ; TODO: add lang support
+  ; TODO: implement a proper OWLAnnotationValueVisitor in clj-owlapi
+  (some-> (first labels) (.getValue) (.getLiteral)))
 
-; TODO: check option
-(defn jsonld-name [^OWLNamedObject named ^OWLOntology ontology label]
+(defn label-for-object [^OWLNamedObject object label]
+  (let [prop (annotation-property (owlapi/create-iri label))]
+  (select (owlapi/annotations object prop))))
+
+(defn jsonld-name [^OWLNamedObject named label]
   (or
-    (label-for-object named ontology label)
+    (label-for-object named label)
     (name-for-iri (.getIRI named))))
 
 (defn named-to-jsonld [^OWLNamedObject named]
   { "@id" (str (.getIRI named)) })
 
-(defn class-to-jsonld [^OWLOntology ontology label ^OWLClass class]
-  { (jsonld-name class ontology label) (named-to-jsonld class) } )
+(defn class-to-jsonld [label ^OWLClass class]
+  { (jsonld-name class label) (named-to-jsonld class) } )
 
-(defn individual-to-jsonld [^OWLOntology ontology label ^OWLNamedIndividual individual]
-  { (jsonld-name individual ontology label) (named-to-jsonld individual) } )
+(defn individual-to-jsonld [label ^OWLNamedIndividual individual]
+  { (jsonld-name individual label) (named-to-jsonld individual) } )
 
 (defn jsonld-type-for-property [^OWLProperty property]
   (cond
@@ -90,8 +92,8 @@
 	        :else {}))
     :else {}))
 
-(defn property-to-jsonld [^OWLOntology ontology label ^OWLProperty property]
-  { (jsonld-name property ontology label)
+(defn property-to-jsonld [label ^OWLProperty property]
+  { (jsonld-name property label)
     (merge
            (jsonld-type-for-property property)
            (named-to-jsonld property) ) } )
@@ -114,16 +116,16 @@
      (let [label (:label options)]
        (merge
          {}
-         (if (:classes options) (apply merge (map (partial class-to-jsonld ontology label)
+         (if (:classes options) (apply merge (map (partial class-to-jsonld label)
                                                   (only-valid options (owlapi/classes ontology)))))
-         (if (:individuals options) (apply merge (map (partial individual-to-jsonld ontology label) (owlapi/individuals ontology))))
+         (if (:individuals options) (apply merge (map (partial individual-to-jsonld label) (owlapi/individuals ontology))))
          (if (:properties options)
           (if (:properties options)
             ;; Old
            (apply merge (concat
-            (map (partial property-to-jsonld ontology label) (only-valid options (owlapi/annotation-properties ontology)))
-            (map (partial property-to-jsonld ontology label) (only-valid options (owlapi/object-properties ontology)))
-            (map (partial property-to-jsonld ontology label) (only-valid options (owlapi/data-properties ontology))))
+            (map (partial property-to-jsonld label) (only-valid options (owlapi/annotation-properties ontology)))
+            (map (partial property-to-jsonld label) (only-valid options (owlapi/object-properties ontology)))
+            (map (partial property-to-jsonld label) (only-valid options (owlapi/data-properties ontology))))
           )))))))
 
 
