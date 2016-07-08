@@ -6,7 +6,7 @@
 *Convert OWL ontology to JSON-LD context*
 
 This tool generate a [JSON-LD](http://www.w3.org/TR/json-ld/) `@context`
-for concepts (classes and properties) found in the specified 
+for concepts (classes and properties) found in the specified
 [OWL](http://www.w3.org/TR/owl2-primer/) or RDFS ontology.
 
 
@@ -51,6 +51,8 @@ the tool using:
 
 ### Options
 
+__New__: for convenience, `--label` has been added as an option.
+
 ```
 Convert OWL ontology to JSON-LD context
 
@@ -62,6 +64,7 @@ Options:
   -c, --classes        Include only classes
   -p, --properties     Include only properties
   -P, --prefix PREFIX  JSON-LD prefix to use for generated concepts (default: no prefix)
+  -l, --label LABEL    Annotation property to use as JSON-LD name for concepts (default: none)
   -i, --inherit        Inherit prefixes from the source ontology
   -o, --output OUTPUT  Output file for generated JSON-LD context (default: write to STDOUT)
   -v, --verbose        Verbose output on STDERR
@@ -89,10 +92,10 @@ More info: README.md or https://github.com/stain/owl2jsonld
 }
 ```
 
-## Usage from Clojure 
+## Usage from Clojure
 
-To use from [Clojure](http://clojure.org/) with 
-[Leiningen](http://leiningen.org/), 
+To use from [Clojure](http://clojure.org/) with
+[Leiningen](http://leiningen.org/),
 use the [Clojar dependency owl2jsonld](https://clojars.org/owl2jsonld):
 
     [owl2jsonld "0.2.1"]
@@ -102,8 +105,8 @@ use the [Clojar dependency owl2jsonld](https://clojars.org/owl2jsonld):
 
 Copyright © 2014 [Stian Soiland-Reyes](http://orcid.org/0000-0001-9842-9718), [University of Manchester](http://www.cs.manchester.ac.uk/).
 
-This source code is distributed under the 
-[Eclipse Public License](http://www.eclipse.org/legal/epl-v10.html) 
+This source code is distributed under the
+[Eclipse Public License](http://www.eclipse.org/legal/epl-v10.html)
 either version 1.0 or (at your option) any later version.
 
 The uberjar contains [OWL API](http://owlapi.sourceforge.net/), which is

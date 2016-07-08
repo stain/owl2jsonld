@@ -57,8 +57,9 @@
   (some-> (first labels) (.getValue) (.getLiteral)))
 
 (defn label-for-object [^OWLNamedObject object label]
-  (let [prop (annotation-property (owlapi/create-iri label))]
-  (select (owlapi/annotations object prop))))
+  (if-not (nil? label)
+    (let [prop (annotation-property (owlapi/create-iri label))]
+    (select (owlapi/annotations object prop)))))
 
 (defn jsonld-name [^OWLNamedObject named label]
   (or
