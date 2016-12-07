@@ -89,6 +89,12 @@ More info: README.md or https://github.com/stain/owl2jsonld
 }
 ```
 
+### Local File Example
+
+OWL documents must be loaded via absolute URLs. Consequently, when loading from your local filesystem, use the `file://` URL scheme:
+
+    $ java -jar owl2jsonld-0.2.1-standalone.jar file:///home/username/path/to/pav.owl
+
 ## Usage from Clojure 
 
 To use from [Clojure](http://clojure.org/) with 
